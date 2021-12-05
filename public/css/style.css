@@ -29525,3 +29525,9 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
       color: #fff; }
 
 /*# sourceMappingURL=style.css.map */
+
+/* self-writting */
+
+.a-cover:hover {
+  text-decoration: black underline;
+}

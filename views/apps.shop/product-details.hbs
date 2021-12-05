@@ -23,20 +23,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-xl-3 ">
-                                <!-- Tab panes -->
-                                <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane fade show active" id="first">
-                                        <img class="img-fluid" src="images/product/1.jpg" alt="">
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane fade" id="second">
-                                        <img class="img-fluid" src="images/product/2.jpg" alt="">
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane fade" id="third">
-                                        <img class="img-fluid" src="images/product/3.jpg" alt="">
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane fade" id="for">
-                                        <img class="img-fluid" src="images/product/4.jpg" alt="">
-                                    </div>
+                                <div class="tab-pane fade show active" id="first">
+                                    <img class="img-fluid" src={{fd.avatar}} alt="">
                                 </div>
                             </div>
                             <!--Tab slider End-->
@@ -44,7 +32,7 @@
                                 <div class="product-detail-content">
                                     <!--Product details-->
                                     <div class="new-arrival-content pr">
-                                        <h4>Solid Women's V-neck Dark T-Shirt</h4>
+                                        <h4>{{fd.name}}</h4>
                                         <div class="star-rating mb-2">
                                             <ul class="produtct-detail-tag">
                                                 <li><i class="fa fa-star"></i></li>
@@ -55,13 +43,14 @@
                                             </ul>
                                             <span class="review-text">(34 reviews) / </span><a class="product-review" href="#">Write a review?</a>
                                         </div>
-                                        <p class="price">$320.00</p>
-                                        <p>Product code: <span class="item">0405689</span> </p>
-                                        <p class="text-content">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
-                                            If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing.</p>
+                                        <p class="price">${{fd.price}}</p>
+                                        <p>Product code: <span class="item">{{fd._id}}</span> </p>
+                                        <p class="text-content">{{fd.description}}</p>
                                         <div class="shopping-cart mt-3">
-                                            <a class="btn btn-primary btn-lg" href="#"><i class="fa fa-pencil mr-2"></i>Update</a>
-                                            <a class="btn btn-primary-2 btn-lg" href="#"><i class="fa fa-trash mr-2"></i>Delete</a>
+                                            <a class="btn btn-primary btn-lg" href="/update-fd/{{fd._id}}"><i class="fa fa-pencil mr-2"></i>Update</a>
+                                            <form method="POST" action="/delete-fd/{{fd._id}}?_method=DELETE" class="btn">
+                                                <button type="submit" class="btn btn-primary-2 btn-lg"><i class="fa fa-trash mr-2"></i>Delete</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

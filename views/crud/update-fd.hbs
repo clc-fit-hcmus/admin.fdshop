@@ -1,0 +1,102 @@
+<!--**********************************
+    Content body start
+***********************************-->
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Hi, welcome back!</h4>
+                    <p class="mb-0">Your business dashboard template</p>
+                </div>
+            </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Components</a></li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
+        <div class="row">
+            <div class="col-xl-12 col-xxl-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Form step</h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="/update-fd/{{fd._id}}" method="post" enctype="multipart/form-data">
+                            <div>
+                                <section>
+                                    <div class="row">
+                                        <div class="col-lg-6 mb-2">
+                                            <div class="form-group">
+                                                <label class="text-label" for="productName">Product Name*</label>
+                                                <input id="productName" type="text" name="name" value="{{fd.name}}" class="form-control" placeholder="Product name..." required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="text-label" for="productPrice">Price*</label>
+                                                <input id="productPrice" type="number" name="price" value="{{fd.price}}" class="form-control" step="0.01" placeholder="Price..." required>
+                                            </div>
+                                        </div>
+                                        <div class="col align-self-end mb-2">
+                                            <div class="form-group">
+                                                <label class="text-label" for="productDiscount">Discount*</label>
+                                                <input id="productDiscount" type="number" name="discount" value="{{fd.discount}}" class="form-control" step="0.01" placeholder="Discount..." required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 mb-2">
+                                            <div class="form-group">
+                                                <label class="text-label" for="productDes">Description*</label>
+                                                <textarea class="form-control" name="description" rows="4" id="productDes" required>{{fd.description}}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 md-2">
+                                            <div class="row">
+                                                <div class="col-lg-6 md-2">
+                                                    <div class="custom-control custom-checkbox mb-3 checkbox-info">
+                                                        {{#if fd.is_best}}
+                                                        <input type="checkbox" name="is_best" checked class="custom-control-input" id="productCheckBoxForBest">
+                                                        {{else}}
+                                                        <input type="checkbox" name="is_best" class="custom-control-input" id="productCheckBoxForBest">
+                                                        {{/if}}
+                                                        <label class="custom-control-label" for="productCheckBoxForBest">Is this one of the best?</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 md-2">
+                                                    <div class="custom-control custom-checkbox mb-3 checkbox-info">
+                                                        {{#if fd.is_drink}}
+                                                        <input type="checkbox" name="is_drink" checked class="custom-control-input" id="productCheckBoxForType">
+                                                        {{else}}
+                                                        <input type="checkbox" name="is_drink" class="custom-control-input" id="productCheckBoxForType">
+                                                        {{/if}}
+                                                        <label class="custom-control-label" for="productCheckBoxForType">Is it a drink?</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="text-label" for="productImage">Image*</label>
+                                                <div class="custom-file">
+                                                    <input id="productImage" name="image" type="file" class="custom-file-input">
+                                                    <label class="custom-file-label" for="productImage" style="color: rgb(126,126,126);">{{fd.cloudinary_id}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 align-self-end md-4">
+                                            <div class="form-group">
+                                                <button style="margin: 12px 0;" type="submit" class="btn btn-primary-2 btn-lg float-right"><i class="fa fa-cart-plus mr-2"></i>Update</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--**********************************
+    Content body end
+***********************************-->
