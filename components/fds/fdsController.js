@@ -3,7 +3,7 @@ const {query, queryFor, updateOne, deleteOne, queryOne, save, count} = require("
 // get FDs from DB
 const getFDs = async (req, res) => {
     try {
-        const perPage = 2;
+        const perPage = 10;
         const maxPage = Math.ceil((await count()) / perPage);
         const page = ((t = (req.query.page || 1)) <= maxPage) && (t > 0) ? t : 1;
         
