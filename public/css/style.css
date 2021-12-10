@@ -29531,3 +29531,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 .a-cover:hover {
   text-decoration: black underline;
 }
+
+.noneDisplay {
+  display: none;
+}

@@ -9,7 +9,7 @@ const getFDs = async (req, res) => {
         
         const fds = await queryFor((perPage * page) - perPage, perPage);
 
-        res.render('apps.shop/product-list', {
+        res.render('apps/shop/product-list', {
             fds,
             current: page,
             is_overload: page >= maxPage,
@@ -29,7 +29,7 @@ const getFD = async (req, res) => {
         const id = req.params.id;
         const fd = (t = await queryOne({ cloudinary_id : { $regex: id} })) ? t : await queryOne({ _id: id });
         
-        res.render('apps.shop/product-details', { fd });
+        res.render('apps/shop/product-details', { fd });
     } catch (error) {
         res.status(409).json({success: false, data: [], error: error});
     }

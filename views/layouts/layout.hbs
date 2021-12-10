@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Eatio - Restaurant Food Order Bootstrap Admin Dashboard</title>
+    <!-- Datatable -->
+    <link href="/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
     <link href="/vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
@@ -36,6 +38,8 @@
     ***********************************-->
     <div id="main-wrapper">
 
+        {{#if login}}
+
         {{>nav-header}}
 		
 		{{>chatbox}}
@@ -43,6 +47,8 @@
 		{{>header}}
 
 		{{>sidebar}}
+
+        {{/if}}
 		
     	{{{body}}}
 
@@ -79,6 +85,10 @@
   <script src="/vendor/jquery-validation/jquery.validate.min.js"></script>
   <!-- Form validate init -->
   <script src="/js/plugins-init/jquery.validate-init.js"></script>
+	
+    <!-- Datatable -->
+    <script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/js/plugins-init/datatables.init.js"></script>
 
 
 

@@ -4,9 +4,6 @@ const {postFD, updateFD, deleteFD, getFDs, getToUpdate, getFD} = require("./fdsC
 
 const router = express.Router();
 
-// router.get('/', getFDs);
-// router.get('/:fdname', getFD);
-
 // add-fd page
 router.get('/add-fd', function(req, res, next) {
   res.render('crud/add-fd');
