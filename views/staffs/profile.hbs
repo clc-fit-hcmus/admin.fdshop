@@ -50,6 +50,30 @@
                             </div>
                         </div>
                     </div>
+                    
+
+                    {{#if hasErrors}}
+                        {{#each errorMessages}}
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                        <strong>Error!</strong> {{this}}
+                        <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+                        </button>
+                    </div>
+                        {{/each}}
+                    {{/if}}
+
+                    {{#if success}}
+                        {{#each successMessages}}
+                    <div class="alert alert-success alert-dismissible fade show">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>	
+                        <strong>Success!</strong> {{this}}
+                        <button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+                        </button>
+                    </div>
+                        {{/each}}
+                    {{/if}}
+
                 </div>
             </div>
         </div>
@@ -74,6 +98,7 @@
                                                 <p>A collection of textile samples lay spread out on the table - Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame.</p>
                                             </div>
                                         </div>
+
                                         <div class="profile-personal-info">
                                             <h4 class="text-primary mb-4">Personal Information</h4>
                                             <div class="row mb-2">
@@ -144,53 +169,56 @@
                                     <div id="profile-settings" class="tab-pane fade">
                                         <div class="pt-3">
                                             <div class="settings-form">
-                                                <h4 class="text-primary">Account Setting</h4>
-                                                <form>
+                                                <h4 class="text-primary" style="margin-bottom: 24px;">Account Setting</h4>
+                                                <form action="/profile" method="post">
                                                     <div class="form-row">
                                                         <div class="form-group col-md-6">
-                                                            <label>Email</label>
-                                                            <input type="email" placeholder="Email" class="form-control">
+                                                            <label for="name">Name</label>
+                                                            <input type="text" placeholder="Name" name="name" id="name" value="{{user.info.name}}" class="form-control" required>
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label>Password</label>
-                                                            <input type="password" placeholder="Password" class="form-control">
+                                                            <label for="dob">Date of birth</label>
+                                                            <input type="date" name="date_of_birth" id="dob" value="{{dateFormat user.info.date_of_birth format="yyyy-MM-DD"}}" class="form-control" required>
                                                         </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Address</label>
-                                                        <input type="text" placeholder="1234 Main St" class="form-control">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Address 2</label>
-                                                        <input type="text" placeholder="Apartment, studio, or floor" class="form-control">
                                                     </div>
                                                     <div class="form-row">
                                                         <div class="form-group col-md-6">
-                                                            <label>City</label>
-                                                            <input type="text" class="form-control">
+                                                            <label for="phone_number">Your phone</label>
+                                                            <input type="text" placeholder="Phone number" name="phone_number" id="phone_number" value="{{user.info.phone_number}}" class="form-control" required>
                                                         </div>
-                                                        <div class="form-group col-md-4">
-                                                            <label>State</label>
-                                                            <select class="form-control" id="inputState">
-                                                                <option selected="">Choose...</option>
-                                                                <option>Option 1</option>
-                                                                <option>Option 2</option>
-                                                                <option>Option 3</option>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="gender">Gender</label>
+                                                            <select class="form-control" id="gender" name="sex" required>
+                                                                {{#compare user.info.sex "Male" operater="=="}}
+                                                                    <option value="Male">Male</option>
+                                                                    <option value="Female">Female</option>
+                                                                {{else}}
+                                                                    <option value="Female">Female</option>
+                                                                    <option value="Male">Male</option>
+                                                                {{/compare}}
                                                             </select>
                                                         </div>
-                                                        <div class="form-group col-md-2">
-                                                            <label>Zip</label>
-                                                            <input type="text" class="form-control">
+                                                    </div>
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-6">
+                                                            <label for="citizenship">Citizenship</label>
+                                                            <input type="text" placeholder="Citizenship" name="citizenship" id="citizenship" value="{{user.info.citizenship}}" class="form-control" required>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="ssn">SSN</label>
+                                                            <input type="text" placeholder="SSN" name="ssn" id="ssn" value="{{user.info.ssn}}" class="form-control" required>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="gridCheck">
-                                                            <label class="custom-control-label" for="gridCheck"> Check me out</label>
+                                                        <label for="address">Address</label>
+                                                        <input type="text" placeholder="Address" name="address" id="address" value="{{user.info.address}}" class="form-control" required>
+                                                    </div>
+                                                    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+                                                    <div class="col-lg-12 align-self-end md-4">
+                                                        <div class="form-group">
+                                                            <button style="margin: 12px -16px;" class="btn btn-primary btn-lg float-right" type="submit">Update</button>
                                                         </div>
                                                     </div>
-                                                    <button class="btn btn-primary" type="submit">Sign
-                                                        in</button>
                                                 </form>
                                             </div>
                                         </div>

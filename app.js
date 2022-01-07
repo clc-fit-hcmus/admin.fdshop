@@ -10,6 +10,7 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const validator = require('express-validator');
 const moment = require('moment');
+const csrf = require('csurf');
 const mongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
 
@@ -34,9 +35,22 @@ const hbs = expressHbs.create({
     },
     times: function(n, block) {
       var accum = '';
-      for(var i = 1; i < n + 1; ++i)
-          accum += block.fn(i);
+      for(var i = 1; i < n + 1; ++i) {
+        accum += block.fn(i);
+      }
+      
       return accum;
+    },
+    timesWithConst: function(n, constant, block) {
+      var accum = '';
+      for(var i = 1; i < n + 1; ++i) {
+        accum += block.fn(i + " " + constant);
+      }
+      
+      return accum;
+    },
+    getSplit: function(string, split, n) {
+      return (string.split(split))[n];
     },
     for: function(from, to, incr, block) {
       var accum = '';
@@ -47,6 +61,70 @@ const hbs = expressHbs.create({
     dateFormat: function (date, options) {
       const formatToUse = (arguments[1] && arguments[1].hash && arguments[1].hash.format) || "DD/MM/YYYY"
       return moment(date).format(formatToUse);
+    },
+    price: function (number) { return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') },
+    compare: function(lvalue, rvalue, options) {
+
+      if (arguments.length < 3)
+          throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
+  
+      var operator = options.hash.operator || "==";
+  
+      var operators = {
+          '==':       function(l,r) { return l == r; },
+          '===':      function(l,r) { return l === r; },
+          '!=':       function(l,r) { return l != r; },
+          '<':        function(l,r) { return l < r; },
+          '>':        function(l,r) { return l > r; },
+          '<=':       function(l,r) { return l <= r; },
+          '>=':       function(l,r) { return l >= r; },
+          'typeof':   function(l,r) { return typeof l == r; }
+      }
+  
+      if (!operators[operator])
+          throw new Error("Handlerbars Helper 'compare' doesn't know the operator "+operator);
+  
+      var result = operators[operator](lvalue,rvalue);
+  
+      if( result ) {
+          return options.fn(this);
+      } else {
+          return options.inverse(this);
+      }
+  
+    },
+    splitAndCompare: function(value, p, options) {
+      const split = value.split(p);
+      const lvalue = split[0];
+      const rvalue = split[1];
+
+      if (arguments.length < 2)
+          throw new Error("Handlerbars Helper 'splitAndCompare' needs 2 parameters");
+  
+      var operator = options.hash.operator || "==";
+  
+      var operators = {
+          '==':       function(l,r) { return l == r; },
+          '===':      function(l,r) { return l === r; },
+          '!=':       function(l,r) { return l != r; },
+          '<':        function(l,r) { return l < r; },
+          '>':        function(l,r) { return l > r; },
+          '<=':       function(l,r) { return l <= r; },
+          '>=':       function(l,r) { return l >= r; },
+          'typeof':   function(l,r) { return typeof l == r; }
+      }
+  
+      if (!operators[operator])
+          throw new Error("Handlerbars Helper 'compare' doesn't know the operator "+operator);
+  
+      var result = operators[operator](lvalue,rvalue);
+  
+      if( result ) {
+          return options.fn(this);
+      } else {
+          return options.inverse(this);
+      }
+  
     }
   }
 });
@@ -65,8 +143,19 @@ app.use(session({
   resave: false, 
   saveUninitialized: false,
   store: new mongoStore({ mongooseConnection: mongoose.connection }),
-  cookie: { maxAge: 180 * 60 * 1000 }
+  cookie: { 
+    maxAge: 180 * 60 * 1000,
+    secure: false 
+  }
 }));
+
+app.use(csrf({ cookie: true }));
+app.use(function (req, res, next) {
+  res.cookie('XSRF-TOKEN', req.csrfToken());
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());

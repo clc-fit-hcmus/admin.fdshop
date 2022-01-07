@@ -1,20 +1,18 @@
 const express = require('express');
-const csrf = require('csurf');
 const passport = require('passport');
 const { isLoggedIn, notLoggedIn } = require('../../utils/login')
-const { getPersons } = require('./personsController');
+const { getPersons, updateProfile } = require('./personsController');
 
 const router = express.Router();
-
-const csrfProtection = csrf();
-router.use(csrfProtection);
 
 router.get('/list', isLoggedIn, getPersons);
 
 router.get('/profile', isLoggedIn, function(req, res, next) {
   const user = req.user.toJSON();
-  console.log(req.user)
-  res.render('staffs/profile', { user });
+  const errorMessages = req.flash('error');
+  const successMessages = req.flash('success');
+  res.render('staffs/profile', { user, errorMessages: errorMessages, successMessages: successMessages, 
+    hasErrors: errorMessages.length > 0, success: successMessages.length > 0 });
 });
 
 router.get('/logout', isLoggedIn, function(req, res, next) {
@@ -23,17 +21,26 @@ router.get('/logout', isLoggedIn, function(req, res, next) {
 })
 
 router.get('/register', isLoggedIn, function(req, res, next) {
-  res.render('staffs/register');
+  const errorMessages = req.flash('error');
+  const successMessages = req.flash('success');
+  res.render('staffs/register', { errorMessages: errorMessages, hasErrors: errorMessages.length > 0,
+    successMessages: successMessages, success: successMessages.length > 0 });
 });
+
+router.post('/register', passport.authenticate('local.signup', {
+  successRedirect: '/register',
+  failureRedirect: '/register',
+  failureFlash: true
+}));
 
 router.get('/up', isLoggedIn, function(req, res, next) {
   const messages = req.flash('error');
-  res.render('staffs/signUp', { csrfToken: req.csrfToken(), body: req.query, messages: messages, hasErrors: messages.length > 0 });
+  res.render('staffs/signUp', { body: req.query, messages: messages, hasErrors: messages.length > 0 });
 });
 
-router.post('/up', passport.authenticate('local.signup', {
-  successRedirect: '/dashboard',
-  failureRedirect: '/up',
+router.post('/profile', passport.authenticate('local.update', {
+  successRedirect: '/profile',
+  failureRedirect: '/profile',
   failureFlash: true
 }));
 
