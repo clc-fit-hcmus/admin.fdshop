@@ -60,7 +60,12 @@ const Person = new mongoose.Schema({
             type: String,
             default: null
         }
+    },
+    is_active: {
+        type: Boolean,
+        default: true
     }
+
 });
 
 Person.methods.encryptPassword = (password) => bcrypt.hashSync(password, bcrypt.genSaltSync(5), null);
