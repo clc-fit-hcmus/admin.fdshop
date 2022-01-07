@@ -10,17 +10,6 @@ const getPersons = async (req, res) => {
     }
 }
 
-const updateProfile = async (req, res) => {
-    try {
-        await update(req);
-        res.redirect('/profile');
-    } catch (error) {
-        console.log(error);
-        res.status(409).json({success: false, data: [], error: error});
-    }
-}
-
 module.exports = {
-    getPersons,
-    updateProfile
+    getPersons
 }

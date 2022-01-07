@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const { isLoggedIn, notLoggedIn } = require('../../utils/login')
-const { getPersons, updateProfile } = require('./personsController');
+const { getPersons } = require('./personsController');
 
 const router = express.Router();
 
