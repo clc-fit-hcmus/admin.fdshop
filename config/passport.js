@@ -109,22 +109,3 @@ passport.use('local.update', new localStrategy({
             });
     })
 }));
-
-passport.use('local.block', new localStrategy({
-    usernameField: 'id',
-    passwordField: 'is_active',
-    passReqToCallback: true
-}, (req, username, password, done) => {
-    const status = password == "true" ? false : true;
-    Person.findByIdAndUpdate(username, { is_active: status }, (error, result) => {
-        if (!result || error) {
-            return done(null, false, req.flash('error', 'Something went wrong! Please try again!'));
-        }
-
-        if (result.is_active) {
-            return done(null, false, req.flash('error', `${result.info.name} has been locked!`));
-        }
-
-        return done(null, false, req.flash('success', `${result.info.name} has been activated!`));
-    })
-}));
