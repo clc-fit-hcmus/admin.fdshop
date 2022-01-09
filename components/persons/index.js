@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
-const { isLoggedIn, notLoggedIn } = require('../../utils/login')
-const { getPersons, blockUser } = require('./personsController');
+const { isLoggedIn } = require('../../utils/login')
+const { getPersons } = require('./personsController');
 
 const router = express.Router();
 
@@ -32,11 +32,6 @@ router.post('/register', passport.authenticate('local.signup', {
   failureRedirect: '/register',
   failureFlash: true
 }));
-
-router.get('/up', isLoggedIn, function(req, res, next) {
-  const messages = req.flash('error');
-  res.render('persons/signUp', { body: req.query, messages: messages, hasErrors: messages.length > 0 });
-});
 
 router.post('/profile', passport.authenticate('local.update', {
   successRedirect: '/profile',

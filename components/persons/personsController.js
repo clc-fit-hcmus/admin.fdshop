@@ -46,17 +46,6 @@ const getPersons = async (req, res) => {
     }
 }
 
-const blockUser = async (req, res) => {
-    try {
-        const id = req.query.id;
-        findByIdAndUpdate(id, { is_active: { $cond: [ { is_active: true}, false, true ] } });
-        res.redirect('/list-user');
-    } catch (error) {
-        res.status(409).json({success: false, data: [], error: error});
-    }
-}
-
 module.exports = {
-    getPersons,
-    blockUser
+    getPersons
 }

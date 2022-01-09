@@ -195,7 +195,6 @@ app.use('/dashboard', indexRouter);
 
 app.use('/', personsRouter);
 app.use('/register', personsRouter);
-app.use('/up', personsRouter);
 app.use('/profile', personsRouter);
 app.use('/logout', personsRouter);
 app.use('/list-user', personsRouter);
