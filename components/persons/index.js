@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const { isLoggedIn } = require('../../utils/login')
-const { getPersons } = require('./personsController');
+const { getPersons, blockUser } = require('./personsController');
 
 const router = express.Router();
 
@@ -39,10 +39,6 @@ router.post('/profile', passport.authenticate('local.update', {
   failureFlash: true
 }));
 
-router.post('/list-user', passport.authenticate('local.block', {
-  successRedirect: '/list-user',
-  failureRedirect: '/list-user',
-  failureFlash: true
-}));
+router.post('/list-user', blockUser);
 
 module.exports = router;

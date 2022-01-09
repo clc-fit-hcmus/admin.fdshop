@@ -46,6 +46,29 @@ const getPersons = async (req, res) => {
     }
 }
 
+const blockUser = async (req, res) => {
+    try {
+        const id = req.body.id;
+        const is_active = req.body.is_active;
+        const user = await findByIdAndUpdate(id, { is_active: is_active });
+
+        if (!user) {
+            req.flash('error', 'Something went wrong! Please try again!');
+        }
+
+        if (user.is_active) {
+            req.flash('error', `${user.info.name} has been locked!`);
+        } else {
+            req.flash('success', `${user.info.name} has been activated!`);
+        }
+        
+        res.redirect('/list-user');
+    } catch (error) {
+        res.status(409).json({success: false, data: [], error: error});
+    }
+}
+
 module.exports = {
-    getPersons
+    getPersons,
+    blockUser
 }

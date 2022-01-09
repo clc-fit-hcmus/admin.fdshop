@@ -8,9 +8,12 @@ const queryFor = (skip, limit, filter = {}) => Person.find(filter).skip(skip).li
 
 const count = (filter = {}) => Person.countDocuments(filter);
 
+const findByIdAndUpdate = (id, filter = {}) => Person.findByIdAndUpdate(id, filter).lean();
+
 module.exports = {
     query,
     queryOne,
     queryFor,
-    count
+    count,
+    findByIdAndUpdate
 }
