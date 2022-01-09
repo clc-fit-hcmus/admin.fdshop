@@ -49,6 +49,14 @@ const hbs = expressHbs.create({
       
       return accum;
     },
+    timesWithConstAndPage: function(n, constant, page, block) {
+      var accum = '';
+      for(var i = 1; i < n + 1; ++i) {
+        accum += block.fn(i + " " + constant + " " + page);
+      }
+      
+      return accum;
+    },
     getSplit: function(string, split, n) {
       return (string.split(split))[n];
     },
@@ -56,6 +64,19 @@ const hbs = expressHbs.create({
       var accum = '';
       for(var i = from; i < to; i += incr)
           accum += block.fn(i);
+      return accum;
+    }, loop: function(user, constValue, block) {
+      var accum = '';
+      for(var i = 0; i < user.length; ++i) {
+          block.data.name = user.info.name;
+          block.data.date_of_birth = user.info.date_of_birth;
+          block.data.sex = user.info.sex;
+          block.data.role = user.login.role;
+          block.data.id = user._id;
+          block.data.constValue = constValue;
+          block.data.is_active = user.is_active;
+          accum += block.fn(this);
+      }
       return accum;
     },
     dateFormat: function (date, options) {
@@ -177,7 +198,7 @@ app.use('/register', personsRouter);
 app.use('/up', personsRouter);
 app.use('/profile', personsRouter);
 app.use('/logout', personsRouter);
-app.use('/list', personsRouter);
+app.use('/list-user', personsRouter);
 
 // for fds
 app.use('/', fdsRouter);

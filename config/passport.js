@@ -55,7 +55,6 @@ passport.use('local.signin', new localStrategy({
 }, (req, username, password, done) => {
     Person.findOne({ 'login.username': username, 'login.role': 'admin' }, (err, user) => {
         if (err) {
-            console.log(`-------------${err}`);
             return done(err);
         }
         if (!user) {
@@ -63,6 +62,9 @@ passport.use('local.signin', new localStrategy({
         }
         if (!user.validPassword(password, user.login.password)) {
             return done(null, false, req.flash('error', 'Wrong password!'));
+        }
+        if (!user.is_active) {
+            return done(null, false, req.flash('error', 'Your account has been locked!'));
         }
 
         return done(null, user);
@@ -105,5 +107,24 @@ passport.use('local.update', new localStrategy({
                     return done(null, false, req.flash('error', 'Something went wrong! Please try again!'));
                 }
             });
+    })
+}));
+
+passport.use('local.block', new localStrategy({
+    usernameField: 'id',
+    passwordField: 'is_active',
+    passReqToCallback: true
+}, (req, username, password, done) => {
+    const status = password == "true" ? false : true;
+    Person.findByIdAndUpdate(username, { is_active: status }, (error, result) => {
+        if (!result || error) {
+            return done(null, false, req.flash('error', 'Something went wrong! Please try again!'));
+        }
+
+        if (result.is_active) {
+            return done(null, false, req.flash('error', `${result.info.name} has been locked!`));
+        }
+
+        return done(null, false, req.flash('success', `${result.info.name} has been activated!`));
     })
 }));

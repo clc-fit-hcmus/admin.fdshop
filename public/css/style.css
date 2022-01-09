@@ -8368,6 +8368,12 @@ a.text-warning:hover, a.text-warning:focus {
 a.text-danger:hover, a.text-danger:focus {
   color: #ce082c !important; }
 
+.text-active {
+  color: #04bd6c !important; }
+
+a.text-active:hover, a.text-danger:focus {
+  color: #039555 !important; }
+
 .text-light {
   color: #c8c8c8 !important; }
 
@@ -29534,4 +29540,28 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 
 .noneDisplay {
   display: none;
+}
+
+.modal-change-password {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.3);
+  animation: modalFadeIn ease .4s;
+  display: none;
+}
+
+.modal-change-password.open {
+  display: flex;
+}
+
+@keyframes modalFadeIn {
+  from {
+    transform: translateY(-100px);
+  } to {
+    transform: translateX(0);
+  }
 }
