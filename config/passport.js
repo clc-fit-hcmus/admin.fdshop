@@ -3,6 +3,7 @@ const Person = require('../models/persons');
 const localStrategy = require('passport-local').Strategy;
 const { getAccount } = require('../utils/utils');
 const moment = require('moment');
+const Token = require('../models/PasswordReset');
 
 passport.serializeUser((user, done) => done(null, user.id));
 
@@ -107,5 +108,35 @@ passport.use('local.update', new localStrategy({
                     return done(null, false, req.flash('error', 'Something went wrong! Please try again!'));
                 }
             });
+    })
+}));
+
+
+
+passport.use('local.changePassword', new localStrategy({
+    usernameField: 'password',
+    passwordField: 'password',
+    passReqToCallback: true
+}, (req, username, password, done) => {
+    Person.findById(req.params.userId, async (err, user) => {
+        if (err) {
+            return done(err);
+        }
+        if (!user) {
+            return done(null, false, req.flash('error', 'Invalid link or expired!'));
+        }
+
+        let token = await Token.findOne({
+            userId: user._id,
+            token: req.params.token,
+        });
+        if (!token) {
+            return done(null, false, req.flash('error', 'Invalid link or expired!'));
+        }
+
+        user.login.password = password;
+        Person.findByIdAndUpdate(user._id, user);
+        token.delete();
+        return done(null, user, req.flash('success', 'Password was changed!'));
     })
 }));

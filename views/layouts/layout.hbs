@@ -63,8 +63,6 @@
     <!--**********************************
         Scripts
     ***********************************-->
-    <!-- Modal -->
-    <script src="/js/modal.js"></script>
     <!-- Required vendors -->
     <script src="/vendor/global/global.min.js"></script>
 	<script src="/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
@@ -99,13 +97,8 @@
   <!-- Form step init -->
   <script src="/js/plugins-init/jquery-steps-init.js"></script>
 
-  <script>
-	// Add the following code if you want the name of the file appear on select
-	$(".custom-file-input").on("change", function() {
-	var fileName = $(this).val().split("\\").pop();
-	$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-	});
-  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.js"></script>
+  <script src="/js/script.js"></script>
   
 </body>
 </html>

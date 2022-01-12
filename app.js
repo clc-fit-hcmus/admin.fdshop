@@ -196,8 +196,14 @@ app.use('/dashboard', indexRouter);
 app.use('/', personsRouter);
 app.use('/register', personsRouter);
 app.use('/profile', personsRouter);
+app.use('/user-profile', personsRouter);
 app.use('/logout', personsRouter);
 app.use('/list-user', personsRouter);
+app.use('/forgot-password', personsRouter);
+app.use('/change-password', personsRouter);
+app.use('/password-reset', personsRouter);
+app.use('/password-change', personsRouter);
+app.use('/confirm-change-password', personsRouter);
 
 // for fds
 app.use('/', fdsRouter);

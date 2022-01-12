@@ -6,8 +6,10 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', notLoggedIn, function(req, res, next) {
-  const messages = req.flash('error');
-  res.render('index', { messages: messages, hasErrors: messages.length > 0 });
+  const errorMessages = req.flash('error');
+  const successMessages = req.flash('success');
+  res.render('index', { errorMessages: errorMessages, successMessages: successMessages, 
+    hasErrors: errorMessages.length > 0, success: successMessages.length > 0 });
 });
 
 router.post('/', passport.authenticate('local.signin', {
