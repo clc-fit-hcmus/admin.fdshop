@@ -29542,7 +29542,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
   display: none;
 }
 
-.modal-change-password {
+.modal-utils {
   position: fixed;
   top: 0;
   right: 0;
@@ -29554,7 +29554,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
   display: none;
 }
 
-.modal-change-password.open {
+.modal-utils.open {
   display: flex;
 }
 

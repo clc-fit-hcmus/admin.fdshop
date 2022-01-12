@@ -17,6 +17,7 @@ const mongoose = require('mongoose');
 const indexRouter = require('./routes');
 const fdsRouter = require('./components/fds');
 const personsRouter = require('./components/persons');
+const reservationsRouter = require('./components/reservations');
 
 const app = express();
 
@@ -204,6 +205,10 @@ app.use('/change-password', personsRouter);
 app.use('/password-reset', personsRouter);
 app.use('/password-change', personsRouter);
 app.use('/confirm-change-password', personsRouter);
+
+// for reservation 
+app.use('/', reservationsRouter);
+app.use('/reservation-list', reservationsRouter);
 
 // for fds
 app.use('/', fdsRouter);

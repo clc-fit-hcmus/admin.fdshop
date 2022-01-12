@@ -40,3 +40,19 @@ $('#js-request-change-password').on('click', (event) => {
         $("#error_change_pass").empty().prepend(alertHTML);
     }).fail((error) => console.log(error))
 })
+
+$(".js-button-accept-reservation").on('click', () => {
+    $('.js-modal-accept-reservation').addClass('open');
+});
+
+$("#js-close-modal-accept-reservation").on('click', () => {
+    $('.js-modal-accept-reservation').removeClass('open');
+});
+
+$(".js-modal-accept-reservation").on('click', () => {
+    $('.js-modal-accept-reservation').removeClass('open');
+});
+
+$("#modal-accept-reservation-form").on('click', (event) => {
+    event.stopPropagation();
+});
