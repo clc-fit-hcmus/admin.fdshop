@@ -17,7 +17,8 @@
                                         <label class="mb-1" for="table_name"><strong>The table</strong></label>
                                         <input type="text" class="form-control" placeholder="Table name..." name="table_name" id="table_name" required>
                                     </div>
-                                    <input type="hidden" name="_csrf" value="{{ csrfToken }}" id="csrf_token_change_pass">
+                                    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+                                    <input type="hidden" name="id" id="accept-reservation-form-id">
                                     <div class="text-center mt-4">
                                         <button type="submit" class="btn btn-primary btn-block" id="js-request-change-password">Book</button>
                                     </div>
